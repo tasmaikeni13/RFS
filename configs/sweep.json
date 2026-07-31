@@ -1,0 +1,40 @@
+{
+  "stage1_tokens": 25000000,
+  "stage2_tokens": 100000000,
+  "keep_per_optimizer": 2,
+  "sweep_budget_usd": 5.0,
+  "optimizers": {
+    "adamw": [
+      {"optimizer.lr": 0.0003, "optimizer.beta2": 0.95},
+      {"optimizer.lr": 0.0006, "optimizer.beta2": 0.95},
+      {"optimizer.lr": 0.0010, "optimizer.beta2": 0.95},
+      {"optimizer.lr": 0.0003, "optimizer.beta2": 0.99},
+      {"optimizer.lr": 0.0006, "optimizer.beta2": 0.99},
+      {"optimizer.lr": 0.0010, "optimizer.beta2": 0.99}
+    ],
+    "shampoo": [
+      {"optimizer.lr": 0.00005, "optimizer.precondition_frequency": 10},
+      {"optimizer.lr": 0.00010, "optimizer.precondition_frequency": 10},
+      {"optimizer.lr": 0.00020, "optimizer.precondition_frequency": 10},
+      {"optimizer.lr": 0.00005, "optimizer.precondition_frequency": 50},
+      {"optimizer.lr": 0.00010, "optimizer.precondition_frequency": 50},
+      {"optimizer.lr": 0.00020, "optimizer.precondition_frequency": 50}
+    ],
+    "soap": [
+      {"optimizer.lr": 0.0010, "optimizer.beta1": 0.95, "optimizer.precondition_frequency": 10},
+      {"optimizer.lr": 0.0030, "optimizer.beta1": 0.95, "optimizer.precondition_frequency": 10},
+      {"optimizer.lr": 0.0060, "optimizer.beta1": 0.95, "optimizer.precondition_frequency": 10},
+      {"optimizer.lr": 0.0010, "optimizer.beta1": 0.95, "optimizer.precondition_frequency": 50},
+      {"optimizer.lr": 0.0030, "optimizer.beta1": 0.95, "optimizer.precondition_frequency": 50},
+      {"optimizer.lr": 0.0060, "optimizer.beta1": 0.95, "optimizer.precondition_frequency": 50}
+    ],
+    "rfs": [
+      {"optimizer.lr": 0.00005, "optimizer.precondition_frequency": 10},
+      {"optimizer.lr": 0.00010, "optimizer.precondition_frequency": 10},
+      {"optimizer.lr": 0.00020, "optimizer.precondition_frequency": 10},
+      {"optimizer.lr": 0.00005, "optimizer.precondition_frequency": 50},
+      {"optimizer.lr": 0.00010, "optimizer.precondition_frequency": 50},
+      {"optimizer.lr": 0.00020, "optimizer.precondition_frequency": 50}
+    ]
+  }
+}

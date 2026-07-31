@@ -1,0 +1,27 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+
+# Large, reproducible artifacts
+data/
+artifacts/raw/
+artifacts/aborted/
+artifacts/checkpoints/
+artifacts/runs/*/checkpoint.pt
+artifacts/runs/*/final.pt
+artifacts/final/*/checkpoint.pt
+artifacts/final/*/final.pt
+artifacts/sweeps/*/checkpoint.pt
+wandb/
+
+# Native extension cache
+.torch_extensions/
+.torch_cache/
+*.so
+*.o

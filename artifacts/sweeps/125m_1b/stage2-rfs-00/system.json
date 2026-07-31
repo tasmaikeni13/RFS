@@ -1,0 +1,61 @@
+{
+  "created_unix": 1785502743.6179757,
+  "hostname": "aeb8d74ef261",
+  "platform": "Linux-6.8.0-134-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "torch": "2.12.0+rocm7.14.0",
+  "torch_hip": "7.14.60850",
+  "gpu": "AMD Instinct MI300X VF",
+  "gpu_properties": {
+    "name": "AMD Instinct MI300X VF",
+    "total_memory_bytes": 205822885888,
+    "multi_processor_count": 304,
+    "gcn_arch_name": "gfx942:sramecc+:xnack-"
+  },
+  "rocm_smi": "============================ ROCm System Management Interface ============================\n========================================= VBIOS ==========================================\nGPU[0]\t\t: VBIOS version: 113-M3000100-103\n==========================================================================================\n====================================== Product Info ======================================\nGPU[0]\t\t: Card Series: \t\tAMD Instinct MI300X VF\nGPU[0]\t\t: Card Model: \t\t0x74b5\nGPU[0]\t\t: Card Vendor: \t\t0x1002\nGPU[0]\t\t: Card SKU: \t\tM3000100\nGPU[0]\t\t: Subsystem ID: \t0x74a1\nGPU[0]\t\t: Device Rev: \t\t0x00\nGPU[0]\t\t: Node ID: \t\t1\nGPU[0]\t\t: GUID: \t\t21947\nGPU[0]\t\t: GFX Version: \t\tgfx942\n==========================================================================================\n================================== End of ROCm SMI Log ===================================",
+  "git_commit": "3c5043208826f1cd2b2d94bf82a919046037539f",
+  "git_dirty": true,
+  "environment": {
+    "PYTORCH_ROCM_ARCH": "gfx942",
+    "HIP_VISIBLE_DEVICES": "0",
+    "TORCHINDUCTOR_CACHE_DIR": "/workspace/.torch_cache",
+    "TORCH_EXTENSIONS_DIR": "/workspace/.torch_extensions"
+  },
+  "run_name": "stage2-rfs-00",
+  "dataset": {
+    "created_unix": 1785496122.9696424,
+    "name": "FineWeb-Edu 1B GPT-2-token corpus",
+    "source": {
+      "config": "sample-10BT",
+      "repo_id": "HuggingFaceFW/fineweb-edu",
+      "revision": "87f09149ef4734204d70ed1d046ddc9ca3f2b8f9"
+    },
+    "split_method": "blake2b(document id) modulo 1000: val=0, test=1, train=2..999",
+    "splits": {
+      "test": {
+        "bytes": 2000000,
+        "documents": 1019,
+        "sha256": "7a1d2ef803a1f4707f93a7f881df6218a57470289d064bd74cfb3941494601ff",
+        "tokens": 1000000
+      },
+      "train": {
+        "bytes": 1996000000,
+        "documents": 966576,
+        "sha256": "814aaeb968eda60f3bf7b826763628839a2de4b2e2dab1f9db4f446505771907",
+        "tokens": 998000000
+      },
+      "val": {
+        "bytes": 2000000,
+        "documents": 899,
+        "sha256": "4a87b22ad5756d87d59933b460f3415be567c3786f425cab9ce8fe4a488db5d0",
+        "tokens": 1000000
+      }
+    },
+    "tokenizer": {
+      "eos_token": 50256,
+      "name": "gpt2",
+      "vocab_size": 50257
+    },
+    "total_tokens": 1000000000
+  }
+}

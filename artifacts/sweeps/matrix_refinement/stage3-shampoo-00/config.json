@@ -1,0 +1,57 @@
+{
+  "model": {
+    "vocab_size": 50257,
+    "context_length": 1024,
+    "n_layer": 12,
+    "n_head": 12,
+    "n_embd": 768,
+    "dropout": 0.0,
+    "bias": true
+  },
+  "data": {
+    "root": "data/fineweb_edu_1b_gpt2",
+    "train_tokens": 998000000,
+    "val_tokens": 1000000,
+    "test_tokens": 1000000
+  },
+  "train": {
+    "seed": 1234,
+    "micro_batch_size": 64,
+    "gradient_accumulation_steps": 8,
+    "max_tokens": 100000000,
+    "warmup_tokens": 5000000,
+    "min_lr_ratio": 0.1,
+    "grad_clip": 1.0,
+    "eval_interval": 1000000,
+    "eval_tokens": 524288,
+    "log_interval": 1,
+    "checkpoint_interval": 0,
+    "compile": true,
+    "precision": "bfloat16"
+  },
+  "optimizer": {
+    "name": "shampoo",
+    "lr": 0.0003,
+    "beta1": 0.9,
+    "beta2": 0.95,
+    "weight_decay": 0.1,
+    "eps": 1e-08,
+    "shampoo_beta": 0.95,
+    "matrix_eps": 0.001,
+    "max_preconditioner_dim": 1024,
+    "precondition_frequency": 10,
+    "start_preconditioning_step": 50,
+    "root_iterations": 60,
+    "graft": true,
+    "use_hip_kernels": true
+  },
+  "runtime": {
+    "output_dir": "artifacts/sweeps/matrix_refinement",
+    "hourly_cost_usd": 2.0,
+    "price_increase_unix": 1785522600,
+    "future_hourly_cost_usd": 2.5,
+    "total_budget_usd": 75.0,
+    "budget_reserve_fraction": 0.1,
+    "save_final_checkpoint": false
+  }
+}

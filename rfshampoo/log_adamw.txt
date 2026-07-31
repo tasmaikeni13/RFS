@@ -1,9 +1,0 @@
-/home/navin/.local/lib/python3.11/site-packages/torch/cuda/__init__.py:61: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
-  import pynvml  # type: ignore[import]
-[adamw] step 1/250 loss 8.4740 opt_ms 28 mem 5.6GB
-[adamw] step 50/250 loss 5.7951 opt_ms 3 mem 6.3GB
-[adamw] step 100/250 loss 5.6124 opt_ms 4 mem 6.3GB
-[adamw] step 150/250 loss 5.3725 opt_ms 3 mem 6.3GB
-[adamw] step 200/250 loss 5.3902 opt_ms 3 mem 6.3GB
-[adamw] step 250/250 loss 5.3191 opt_ms 3 mem 6.3GB
-DONE adamw wall 117s median_opt_ms 3

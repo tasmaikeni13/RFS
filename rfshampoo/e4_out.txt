@@ -1,4 +1,0 @@
-eigh1-gold med_step    83.0 ms
-cont      med_step   166.0 ms  speedup  0.5x  traj-vs-gold 5.0e-12 -> 4.2e-11  orth 7.5e-15
-eighK=100 DIVERGED (stale eps-scale preconditioner at this lr)
-E4-DONE

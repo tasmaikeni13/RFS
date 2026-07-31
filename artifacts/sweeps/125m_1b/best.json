@@ -1,0 +1,98 @@
+{
+  "spent_usd": 2.6840151678191293,
+  "best": {
+    "adamw": {
+      "name": "stage2-adamw-00",
+      "optimizer": "adamw",
+      "overrides": {
+        "optimizer.lr": 0.001,
+        "optimizer.beta2": 0.99
+      },
+      "val_loss": 6.472552299499512,
+      "orchestration_seconds": 299.93293499946594,
+      "orchestration_cost_usd": 0.16662940833303663,
+      "status": "complete",
+      "run_name": "stage2-adamw-00",
+      "seed": 1234,
+      "steps": 190,
+      "trained_tokens": 99614720,
+      "parameter_count": 124439808,
+      "test_loss": 6.479465961456299,
+      "test_perplexity": 651.6228616100755,
+      "wall_seconds": 294.89524039999924,
+      "cost_usd": 0.16383081899748908,
+      "peak_vram_bytes": 41525865472
+    },
+    "shampoo": {
+      "name": "stage2-shampoo-00",
+      "optimizer": "shampoo",
+      "overrides": {
+        "optimizer.lr": 0.0001,
+        "optimizer.precondition_frequency": 10,
+        "optimizer.start_preconditioning_step": 10
+      },
+      "val_loss": 6.86052131652832,
+      "orchestration_seconds": 312.47856044769287,
+      "orchestration_cost_usd": 0.17359920024871825,
+      "status": "complete",
+      "run_name": "stage2-shampoo-00",
+      "seed": 1234,
+      "steps": 190,
+      "trained_tokens": 99614720,
+      "parameter_count": 124439808,
+      "test_loss": 6.877255439758301,
+      "test_perplexity": 969.9605880137403,
+      "wall_seconds": 306.87167443900034,
+      "cost_usd": 0.17048436323801677,
+      "peak_vram_bytes": 41963504640
+    },
+    "soap": {
+      "name": "stage2-soap-01",
+      "optimizer": "soap",
+      "overrides": {
+        "optimizer.lr": 0.001,
+        "optimizer.beta1": 0.95,
+        "optimizer.precondition_frequency": 10,
+        "optimizer.start_preconditioning_step": 10
+      },
+      "val_loss": 6.119609832763672,
+      "orchestration_seconds": 328.0062038898468,
+      "orchestration_cost_usd": 0.18222566882769267,
+      "status": "complete",
+      "run_name": "stage2-soap-01",
+      "seed": 1234,
+      "steps": 190,
+      "trained_tokens": 99614720,
+      "parameter_count": 124439808,
+      "test_loss": 6.128393173217773,
+      "test_perplexity": 458.69851914202906,
+      "wall_seconds": 322.45294598700093,
+      "cost_usd": 0.179140647649765,
+      "peak_vram_bytes": 41831528448
+    },
+    "rfs": {
+      "name": "stage2-rfs-00",
+      "optimizer": "rfs",
+      "overrides": {
+        "optimizer.lr": 0.0001,
+        "optimizer.precondition_frequency": 10,
+        "optimizer.start_preconditioning_step": 10
+      },
+      "val_loss": 6.86678409576416,
+      "orchestration_seconds": 315.5048613548279,
+      "orchestration_cost_usd": 0.17528047853045994,
+      "status": "complete",
+      "run_name": "stage2-rfs-00",
+      "seed": 1234,
+      "steps": 190,
+      "trained_tokens": 99614720,
+      "parameter_count": 124439808,
+      "test_loss": 6.884011745452881,
+      "test_perplexity": 976.5361264186945,
+      "wall_seconds": 310.062304264,
+      "cost_usd": 0.17225697742568122,
+      "peak_vram_bytes": 41963504640
+    }
+  },
+  "selection_metric": "lowest validation cross-entropy after stage2_tokens"
+}

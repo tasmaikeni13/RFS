@@ -1,0 +1,14 @@
+{
+  "status": "complete",
+  "run_name": "stage3-rfs-03",
+  "optimizer": "rfs",
+  "seed": 1234,
+  "steps": 190,
+  "trained_tokens": 99614720,
+  "parameter_count": 124439808,
+  "test_loss": 6.861995697021484,
+  "test_perplexity": 955.2715991100818,
+  "wall_seconds": 308.3084789349996,
+  "cost_usd": 0.17128259658813477,
+  "peak_vram_bytes": 41963504640
+}

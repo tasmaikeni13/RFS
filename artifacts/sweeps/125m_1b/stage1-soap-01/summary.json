@@ -1,0 +1,14 @@
+{
+  "status": "complete",
+  "run_name": "stage1-soap-01",
+  "optimizer": "soap",
+  "seed": 1234,
+  "steps": 47,
+  "trained_tokens": 24641536,
+  "parameter_count": 124439808,
+  "test_loss": 7.557040691375732,
+  "test_perplexity": 1914.1724962329706,
+  "wall_seconds": 99.5729040010001,
+  "cost_usd": 0.055318411191304526,
+  "peak_vram_bytes": 41831528448
+}

@@ -1,0 +1,14 @@
+{
+  "status": "complete",
+  "run_name": "stage3-shampoo-03",
+  "optimizer": "shampoo",
+  "seed": 1234,
+  "steps": 190,
+  "trained_tokens": 99614720,
+  "parameter_count": 124439808,
+  "test_loss": 6.842527389526367,
+  "test_perplexity": 936.8539399139518,
+  "wall_seconds": 308.6559854400002,
+  "cost_usd": 0.17147567391395568,
+  "peak_vram_bytes": 41963504640
+}

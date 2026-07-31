@@ -1,0 +1,17 @@
+{"gpu_busy_percent": 0.0, "junction_temp_c": 44.0, "monotonic_s": 6722.57898976, "power_w": 195.0, "unix": 1785498991.8904057, "vram_used_bytes": 1277911040.0}
+{"gpu_busy_percent": 0.0, "junction_temp_c": 44.0, "monotonic_s": 6727.598299378, "power_w": 194.0, "unix": 1785498996.909715, "vram_used_bytes": 41061601280.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 50.0, "monotonic_s": 6732.599882084, "power_w": 750.0, "unix": 1785499001.911298, "vram_used_bytes": 42589528064.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 63.0, "monotonic_s": 6737.601398746, "power_w": 753.0, "unix": 1785499006.912815, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 65.0, "monotonic_s": 6742.602852557, "power_w": 752.0, "unix": 1785499011.9142687, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 66.0, "monotonic_s": 6747.604496102, "power_w": 754.0, "unix": 1785499016.9159122, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 66.0, "monotonic_s": 6752.606184463, "power_w": 746.0, "unix": 1785499021.9176009, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 67.0, "monotonic_s": 6757.60757101, "power_w": 751.0, "unix": 1785499026.9189873, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 67.0, "monotonic_s": 6762.609186314, "power_w": 753.0, "unix": 1785499031.9206023, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 67.0, "monotonic_s": 6767.610761814, "power_w": 751.0, "unix": 1785499036.922178, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 67.0, "monotonic_s": 6772.612291102, "power_w": 749.0, "unix": 1785499041.9237075, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 67.0, "monotonic_s": 6777.613856342, "power_w": 748.0, "unix": 1785499046.9252725, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 67.0, "monotonic_s": 6782.615479627, "power_w": 748.0, "unix": 1785499051.9268959, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 67.0, "monotonic_s": 6787.617049564, "power_w": 748.0, "unix": 1785499056.9284656, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 67.0, "monotonic_s": 6792.618581536, "power_w": 748.0, "unix": 1785499061.929998, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 100.0, "junction_temp_c": 67.0, "monotonic_s": 6797.620213712, "power_w": 753.0, "unix": 1785499066.93163, "vram_used_bytes": 49208586240.0}
+{"gpu_busy_percent": 89.0, "junction_temp_c": 57.0, "monotonic_s": 6802.62173141, "power_w": 685.0, "unix": 1785499071.9331477, "vram_used_bytes": 49209634816.0}

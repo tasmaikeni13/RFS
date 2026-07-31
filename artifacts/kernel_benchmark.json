@@ -1,0 +1,23 @@
+{
+  "torch": "2.12.0+rocm7.14.0",
+  "hip": "7.14.60850",
+  "gpu": "AMD Instinct MI300X VF",
+  "adamw": {
+    "elements": 124439808,
+    "native_ms": 0.812747998679697,
+    "torch_ms": 3.6848959998678765,
+    "speedup": 4.533872745123904
+  },
+  "inverse_fourth_root": {
+    "batch": 61,
+    "dimension": 768,
+    "iterations": 60,
+    "matrix_epsilon": 0.001,
+    "rfs_ms": 175.54172600102902,
+    "eigh_ms": 85.44660400002613,
+    "speedup": 0.48675950696488673,
+    "max_certificate": 6.812946474338277e-13,
+    "max_relative_to_eigh": 1.1508887592937e-10
+  },
+  "created_unix": 1785507357.4372988
+}

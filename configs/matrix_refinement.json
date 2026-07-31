@@ -1,0 +1,13 @@
+{
+  "tokens": 100000000,
+  "budget_usd": 2.5,
+  "optimizers": ["shampoo", "rfs"],
+  "settings": [
+    {"optimizer.lr": 0.0003, "optimizer.matrix_eps": 0.001, "optimizer.start_preconditioning_step": 50, "optimizer.precondition_frequency": 10},
+    {"optimizer.lr": 0.0006, "optimizer.matrix_eps": 0.001, "optimizer.start_preconditioning_step": 50, "optimizer.precondition_frequency": 10},
+    {"optimizer.lr": 0.0003, "optimizer.matrix_eps": 0.01, "optimizer.start_preconditioning_step": 50, "optimizer.precondition_frequency": 10},
+    {"optimizer.lr": 0.0006, "optimizer.matrix_eps": 0.01, "optimizer.start_preconditioning_step": 50, "optimizer.precondition_frequency": 10},
+    {"optimizer.lr": 0.0003, "optimizer.matrix_eps": 0.1, "optimizer.start_preconditioning_step": 50, "optimizer.precondition_frequency": 10},
+    {"optimizer.lr": 0.0006, "optimizer.matrix_eps": 0.1, "optimizer.start_preconditioning_step": 50, "optimizer.precondition_frequency": 10}
+  ]
+}

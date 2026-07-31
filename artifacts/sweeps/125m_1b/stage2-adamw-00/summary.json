@@ -1,0 +1,14 @@
+{
+  "status": "complete",
+  "run_name": "stage2-adamw-00",
+  "optimizer": "adamw",
+  "seed": 1234,
+  "steps": 190,
+  "trained_tokens": 99614720,
+  "parameter_count": 124439808,
+  "test_loss": 6.479465961456299,
+  "test_perplexity": 651.6228616100755,
+  "wall_seconds": 294.89524039999924,
+  "cost_usd": 0.16383081899748908,
+  "peak_vram_bytes": 41525865472
+}
