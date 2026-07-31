@@ -1,0 +1,5 @@
+/home/navin/.local/lib/python3.11/site-packages/torch/cuda/__init__.py:61: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+{"N": 1024, "eigh_fp32_ms": 15.68737030029297, "eigh_fp64_ms": 40.29030799865723, "gemm_fp32_ms": 0.15764236450195312, "contin_rank1_ms": 20.50299644470215, "rank1_per_eigh64": 1.9650936441082005}
+{"N": 2048, "eigh_fp32_ms": 46.57902717590332, "eigh_fp64_ms": 168.5594081878662, "gemm_fp32_ms": 1.1417388916015625, "contin_rank1_ms": 19.887971878051758, "rank1_per_eigh64": 8.475444817673306}
+{"N": 4096, "eigh_fp32_ms": 262.4685764312744, "eigh_fp64_ms": 982.9270839691162, "gemm_fp32_ms": 9.24825668334961, "contin_rank1_ms": 76.18527412414551, "rank1_per_eigh64": 12.901798874772254}

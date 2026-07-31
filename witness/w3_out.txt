@@ -1,0 +1,9 @@
+t=   1  |W_eigh - W_ref| = 2.281e-14   |W_cont - W_ref| = 8.728e-15   ratio cont/eigh = 0.38
+t=   2  |W_eigh - W_ref| = 2.619e-14   |W_cont - W_ref| = 1.429e-14   ratio cont/eigh = 0.55
+t=   5  |W_eigh - W_ref| = 4.640e-14   |W_cont - W_ref| = 2.698e-14   ratio cont/eigh = 0.58
+t=  10  |W_eigh - W_ref| = 7.456e-14   |W_cont - W_ref| = 4.277e-14   ratio cont/eigh = 0.57
+t=  25  |W_eigh - W_ref| = 9.087e-14   |W_cont - W_ref| = 7.656e-14   ratio cont/eigh = 0.84
+t=  50  |W_eigh - W_ref| = 1.070e-13   |W_cont - W_ref| = 1.141e-13   ratio cont/eigh = 1.07
+t= 100  |W_eigh - W_ref| = 1.851e-13   |W_cont - W_ref| = 1.682e-13   ratio cont/eigh = 0.91
+t= 150  |W_eigh - W_ref| = 2.247e-13   |W_cont - W_ref| = 2.597e-13   ratio cont/eigh = 1.16
+DONE
