@@ -5,8 +5,8 @@
 \newcommand{\RFS}{\textsc{RFS}}
 \newcommand{\E}{\mathbb{E}}
 \title{Root-Free Shampoo at 125M Parameters:\\A Controlled MI300X Study on One Billion FineWeb-Edu Tokens}
-\author{Anonymous}
-\date{}
+\author{Tasmai Keni\\\texttt{tas.ken.rt25@dypatil.edu}}
+\date{August 1, 2026}
 
 \begin{document}
 \maketitle
@@ -14,14 +14,22 @@
 \begin{abstract}
 I evaluate Root-Free Shampoo (\RFS), an eigendecomposition-free realization of
 Shampoo's inverse fourth-root preconditioner, on a 124.44M-parameter decoder-only
-Transformer trained on a deterministic one-billion-token FineWeb-Edu corpus.  The
+Transformer trained on a deterministic one-billion-token FineWeb-Edu corpus. The
 study compares AdamW, Shampoo, SOAP, and \RFS under a shared model, data order,
-token budget, precision policy, and hardware stack.  I tune each optimizer in a
-budgeted two-stage sweep and then run three independent seeds per method.  In
-addition to held-out loss, I report end-to-end wall time, optimizer latency,
-throughput, memory, power, and the defining \RFS{} numerical certificate.  The
-artifact includes native HIP/C++ kernels specialized for AMD's gfx942 architecture
-and fully reproducible data manifests, configurations, logs, and analysis code.
+token budget, precision policy, and AMD MI300X hardware stack. I tune each method
+with a constrained sweep and run three independent final seeds. SOAP obtains the
+lowest final test cross-entropy, $3.4697\pm0.0034$, followed by AdamW at
+$4.0515\pm0.0671$; Shampoo and \RFS reach $5.1200\pm0.0191$ and
+$5.1123\pm0.0081$, respectively. Thus the tested \RFS configuration does not
+improve language-model loss over the baselines. Its positive result is narrower:
+the coupled Newton--Schulz implementation attains a maximum inverse-root
+certificate residual of $6.81\times10^{-13}$ and agrees with the fp64
+eigendecomposition reference to $1.15\times10^{-10}$ relative error. A fused
+AdamW HIP primitive is 4.53$\times$ faster than the equivalent PyTorch
+elementwise composition, while the tested RFS root is slower than MI300X
+eigendecomposition. I release the complete data manifest, source, kernels,
+logs, telemetry, figures, and runtime ledger so that these mixed results are
+auditable rather than selectively reported.
 \end{abstract}
 
 \section{Introduction}
@@ -30,16 +38,18 @@ coordinates. Shampoo instead accumulates Kronecker factors and preconditions a
 matrix gradient on both sides~\citep{gupta2018shampoo}. Its practical bottleneck is
 the repeated matrix inverse fourth root, commonly evaluated by an eigensolver and
 therefore refreshed only intermittently. SOAP tracks Shampoo eigenbases while
-running Adam in the rotated coordinates~\citep{vyas2024soap}. \RFS{} asks a narrower
-question: can the same dense Shampoo operator be realized without an eigendecomposition
-using only matrix multiplications and certified iterations?
+running Adam in rotated coordinates~\citep{vyas2024soap}. \RFS{} asks a narrower
+systems question: can the same dense Shampoo operator be realized without an
+eigendecomposition using only matrix multiplications and certified iterations?
 
-This paper is an empirical systems study rather than a claim that every workload
-favors second-order optimization. I isolate the root engine by giving Shampoo and
+This is an empirical study, not a claim that every workload favors
+second-order optimization. I isolate the root engine by giving Shampoo and
 \RFS{} the same factors, graft, update schedule, regularization, and fp64 refresh
-precision. I also include AdamW~\citep{loshchilov2019adamw} and the authors' SOAP
-state-transition rules as external baselines. Every final conclusion is based on
-three seeds after optimizer-specific tuning.
+precision. I also include AdamW~\citep{loshchilov2019adamw} and SOAP as external
+baselines. All final conclusions use three seeds after optimizer-specific tuning.
+The central finding is negative for this particular RFS training recipe: its
+root certificate is strong, but loss quality is substantially worse than SOAP and
+AdamW at one billion tokens.
 
 \section{Root-Free Shampoo}
 For a matrix parameter $W_t\in\mathbb{R}^{m\times n}$ with gradient $G_t$, the
@@ -63,32 +73,32 @@ T_k&=\tfrac12(3I-Z_kY_k),\\
 Y_{k+1}&=\operatorname{sym}(Y_kT_k),&
 Z_{k+1}&=\operatorname{sym}(T_kZ_k).
 \end{align}
-In exact arithmetic, $Y_k\rightarrow A^{1/2}$ and
-$Z_k\rightarrow A^{-1/2}$. I apply the construction twice: first to obtain
-$B=A^{1/2}$ and then to obtain $(B/\lVert B\rVert_F)^{-1/2}$. Restoring both
-normalizations yields $X=L^{-1/4}$. This is a cold refresh; I do not warm-start a
-one-sided inverse-root iteration, whose noncommuting rounding modes can be unstable
-for ill-conditioned factors.
+In exact arithmetic, $Y_k\rightarrow A^{1/2}$ and $Z_k\rightarrow A^{-1/2}$. I
+apply the construction twice: first to obtain $B=A^{1/2}$ and then to obtain
+$(B/\lVert B\rVert_F)^{-1/2}$. Restoring both normalizations yields
+$X=L^{-1/4}$. This is a cold refresh; I do not warm-start a one-sided
+inverse-root iteration, whose noncommuting rounding modes can be unstable for
+ill-conditioned factors.
 
-The implementation stops each matrix independently when the coupled residual reaches
-$50\epsilon_{\mathrm{mach}}$ or ceases to improve meaningfully for four iterations
-after entering the numerical floor. The online certificate is
+The implementation stops each matrix independently when the coupled residual
+reaches $50\epsilon_{\mathrm{mach}}$ or ceases to improve meaningfully for four
+iterations after entering the numerical floor. The online certificate is
 \begin{equation}
   c(X,L)=\frac{\lVert X^4L-I\rVert_F}{\sqrt{\dim L}}.
 \end{equation}
-Early language-model gradients make nearly rank-deficient factors. I therefore use
-scale-relative regularization $L+10^{-3}\operatorname{tr}(L)I/n$ and evaluate both
-\RFS{} and the Shampoo eigensolver in fp64 before casting the preconditioner to fp32.
-This precision choice is held fixed across the two methods.
+Early language-model gradients make nearly rank-deficient factors. I therefore
+use scale-relative regularization $L+10^{-3}\operatorname{tr}(L)I/n$ and evaluate
+both \RFS{} and the Shampoo eigensolver in fp64 before casting the preconditioner
+to fp32. This precision choice is held fixed across the two methods.
 
 \subsection{Why ``root-free''}
-The name denotes removal of an explicit spectral root primitive, not removal of the
-mathematical operator. A scalar inverse fourth root cannot in general be represented
-by a finite rational expression: if $a^{-1/4}=P(a)/Q(a)$ on an infinite set, then
-$aP(a)^4=Q(a)^4$, whose polynomial degrees disagree modulo four. Consequently any
-finite-precision implementation---including QR-based eigendecomposition---uses an
-iteration. \RFS{} makes that iteration explicit, matmul-only, and directly
-certifiable by the defining equation.
+The name denotes removal of an explicit spectral root primitive, not removal of
+the mathematical operator. A scalar inverse fourth root cannot in general be
+represented by a finite rational expression: if $a^{-1/4}=P(a)/Q(a)$ on an
+infinite set, then $aP(a)^4=Q(a)^4$, whose polynomial degrees disagree modulo
+four. Consequently any finite-precision implementation---including QR-based
+eigendecomposition---uses an iteration. \RFS{} makes that iteration explicit,
+matmul-only, and directly certifiable by the defining equation.
 
 \section{Experimental design}
 \paragraph{Model.}
@@ -99,12 +109,13 @@ initialization~\citep{radford2019gpt2}. Forward and backward matrix operations u
 BF16; logits are promoted to fp32 for cross-entropy.
 
 \paragraph{Data.}
-I tokenize FineWeb-Edu~\citep{penedo2024fineweb} from Hugging Face's pinned
-\texttt{HuggingFaceFW/fineweb-edu} sample-10BT
-revision with the GPT-2 tokenizer. A BLAKE2b hash of the document identifier assigns
-whole documents to train, validation, or test before packing. Exact quotas are
-998M/1M/1M tokens. The manifests include SHA-256 digests. Fixed batch geometry
-processes 997,720,064 training tokens per nominal one-billion-token run; the small
+I tokenize FineWeb-Edu~\citep{penedo2024fineweb} from the pinned Hugging Face
+\texttt{HuggingFaceFW/fineweb-edu} \texttt{sample-10BT} revision
+\texttt{87f09149ef4734204d70ed1d046ddc9ca3f2b8f9} with the GPT-2 tokenizer. A
+BLAKE2b hash of the document identifier assigns whole documents to train,
+validation, or test before packing. Exact quotas are 998M/1M/1M tokens; the
+manifest records document counts and SHA-256 digests. Fixed batch geometry
+processes 997,720,064 training tokens per nominal one-billion-token run, and the
 remainder is reported rather than silently changing sequence or optimizer-batch
 shape.
 
@@ -113,77 +124,124 @@ The candidates are AdamW, dense Shampoo with Adam grafting, SOAP, and \RFS{} wit
 the same grafting implementation as Shampoo. The effective optimizer batch is
 524,288 tokens (64 sequences per microbatch and eight-way gradient accumulation).
 All methods use cosine decay, a 10M-token warmup, gradient clipping at one, and
-decoupled weight decay. A deterministic seed-1234 sweep first evaluates six settings
-per optimizer for 25M tokens; the best two advance to 100M tokens. Selection uses
-validation cross-entropy only. I then evaluate the selected setting at seeds 1, 2,
-and 3. Optimizer order rotates by seed to reduce correlation with server age and
-temperature.
+decoupled weight decay. A deterministic seed-1234 sweep first evaluates six
+settings per optimizer for 25M tokens; the best two advance to 100M tokens. A
+matched six-setting refinement then explores activation timing and matrix damping
+for Shampoo and \RFS{}. Selection uses validation cross-entropy only. The selected
+settings are AdamW $(\eta=10^{-3},\beta_2=0.99)$, SOAP
+$(\eta=10^{-3},\beta_1=0.95)$, Shampoo $(\eta=3\times10^{-4},
+\epsilon=10^{-3},\text{start}=50)$, and \RFS{} with the same matrix settings as
+Shampoo. I evaluate each selected setting at seeds 1, 2, and 3, rotating optimizer
+order by seed to reduce correlation with server age and temperature.
 
-\paragraph{Hardware and cost.}
-All experiments use one AMD Instinct MI300X VF (gfx942, 304 compute units, 192 GiB
-HBM) with ROCm 7.14 and PyTorch 2.12 in a pinned container. The host exposes 20 CPU
-cores and 235 GiB RAM. Rental cost is integrated by timestamp at \$2/hour through
-July 31, 2026 and \$2.50/hour from August 1, with a \$75 absolute ceiling. Dataset
-preparation, compilation, pilots, sweeps, final runs, and analysis are included in
-the continuous-server ledger.
+\paragraph{Hardware and runtime.}
+All experiments use one AMD Instinct MI300X VF (gfx942, 304 compute units, 192
+GiB HBM) with ROCm 7.14 and PyTorch 2.12 in a pinned container. The host exposes
+20 CPU cores and 235 GiB RAM. Dataset preparation, compilation, pilots, sweeps,
+final runs, and analysis were recorded in a continuous runtime ledger alongside
+the per-run telemetry.
 
 \paragraph{Native kernels.}
 The gfx942 extension fuses AdamW's two moment updates, bias correction, decoupled
-decay, and parameter update. Shared kernels implement factor EMA and final parameter
-updates; \RFS{} additionally uses batched fp32/fp64 affine-identity and
-symmetrization kernels. Large GEMMs use rocBLAS and Shampoo roots use rocSOLVER. Every
-native primitive is parity-tested before long runs.
+decay, and parameter update. Shared kernels implement factor EMA and final
+parameter updates; \RFS{} additionally uses batched fp32/fp64 affine-identity and
+symmetrization kernels. Large GEMMs use rocBLAS and Shampoo roots use rocSOLVER.
+Every native primitive is parity-tested before long runs.
 
 \section{Results}
-Figure~\ref{fig:curves} reports seed means and one standard deviation for training
-and validation loss. Table~\ref{tab:results} reports the held-out and systems
-outcomes. Wall time is end-to-end and includes periodic evaluation, optimizer cold
-start, refreshes, and final test evaluation.
+Figure~\ref{fig:curves} reports seed means and one sample standard deviation for
+training and validation loss. Table~\ref{tab:results} reports the final test and
+systems outcomes. Wall time is end-to-end and includes periodic evaluation,
+optimizer refreshes, compilation, and final test evaluation.
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{../figures/learning_curves.pdf}
-  \caption{Training and held-out validation cross-entropy across three seeds.}
+  \caption{Training and held-out validation cross-entropy across three seeds. SOAP
+  descends fastest and ends lowest; AdamW is second, while Shampoo and RFS remain
+  near one another and substantially higher. Shaded bands are one sample standard
+  deviation.}
   \label{fig:curves}
 \end{figure}
 
 \begin{table}[t]
   \centering
-  \caption{Final quality and systems measurements (mean $\pm$ sample standard
-  deviation where shown).}
+  \caption{Final quality and systems measurements. Loss, wall time, throughput,
+  and peak memory are means across seeds; loss uncertainty is the sample standard
+  deviation.}
   \label{tab:results}
   \input{../figures/results_table.tex}
 \end{table}
 
+\subsection{Held-out quality}
+SOAP reaches test cross-entropy $3.4697\pm0.0034$, corresponding to
+$\exp(3.4697)=32.13$ perplexity. AdamW reaches $4.0515\pm0.0671$ (57.48
+perplexity), while Shampoo and RFS reach $5.1200\pm0.0191$ and
+$5.1123\pm0.0081$. The SOAP--AdamW mean gap is 0.5817 nats (14.4\% relative to
+AdamW's loss), and RFS is 1.0609 nats above AdamW. The final validation values
+show the same ordering: SOAP $3.5002\pm0.0025$, AdamW $4.0771\pm0.0656$,
+RFS $5.1206\pm0.0063$, and Shampoo $5.1281\pm0.0182$.
+
+The selected Shampoo and RFS settings are much better than their initial sweep
+settings at 100M tokens, but their improvement does not close the gap to AdamW or
+SOAP at one billion tokens. This is important negative evidence against treating a
+small root-residual certificate as a proxy for language-model optimization quality.
+
+\subsection{Systems behavior}
+AdamW has the shortest mean wall time (0.798 h) and highest median throughput
+(351.5k tokens/s). Shampoo and RFS are within 2.3\% of AdamW wall time despite
+their matrix refreshes. SOAP is 6.96\% slower than AdamW and has a median
+throughput of 349.6k tokens/s. Peak VRAM is tightly clustered at 38.7--39.1 GiB;
+the quality ordering is therefore not explained by a memory-capacity difference.
+Telemetry records approximately 99\% mean GPU busy time and 0.595--0.611 kWh
+per run. The measured GPU power and energy are close across methods, with the
+complete values provided in `figures/results.csv`; the continuous runtime ledger
+also includes setup and idle intervals.
+
+The kernel microbenchmark is interpreted separately from end-to-end training. The
+fused AdamW primitive processes the full flat parameter state in 0.813 ms versus
+3.685 ms for the equivalent PyTorch composition (4.53$\times$). For a batch of
+61 matrices of dimension 768, the RFS inverse-fourth-root path takes 175.5 ms,
+whereas fp64 eigendecomposition takes 85.4 ms. The RFS maximum certificate is
+$6.81\times10^{-13}$ and its maximum relative error to the eigendecomposition
+reference is $1.15\times10^{-10}$. Thus RFS is numerically accurate in this test,
+but not root-stage faster on this MI300X configuration.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{../figures/outcomes_and_systems.pdf}
-  \caption{Final test loss, end-to-end wall time, and steady-state throughput.}
+  \caption{Final test loss, wall time, steady-state throughput, and measured GPU
+  energy. Error bars show sample standard deviation when available.}
   \label{fig:systems}
 \end{figure}
 
-The kernel microbenchmark is interpreted separately from end-to-end training.
-A faster elementwise primitive need not change total time when Transformer GEMMs
-dominate, and a root refresh can be slower in isolation yet negligible at a long
-refresh period. I therefore avoid extrapolating kernel speedups into optimizer
-quality or total cost.
-
 \section{Limitations}
-The study covers one model scale, one corpus, one context length, and one accelerator.
-Three seeds quantify gross variance but are insufficient for small-effect asymptotic
-claims. Hyperparameter search is deliberately budgeted, so it cannot establish a
-global optimum for any method. The comparison uses dense factors only up to dimension
-1024 and falls back on diagonal Adam behavior for larger axes. Finally, the findings
-concern the certified RFS realization tested here; other continuation or low-rank
-\RFS{} engines may have different scaling.
+The study covers one model scale, one corpus, one context length, and one
+accelerator. Three seeds quantify gross variance but are insufficient for small
+effect asymptotic claims. Hyperparameter search is deliberately constrained, so it
+cannot establish a global optimum for any method. The comparison uses dense
+factors only up to dimension 1024 and falls back on diagonal Adam behavior for
+larger axes. Finally, these findings concern the certified RFS realization tested
+here; other continuation, low-rank, or GPU-specific root engines may have
+different scaling.
+
+\section{Conclusion}
+On this controlled 125M-parameter, one-billion-token MI300X experiment, SOAP is
+the clear quality leader, AdamW is the strongest simple baseline, and the tested
+Shampoo/RFS pair does not match either. RFS succeeds as a certified numerical
+construction and integrates cleanly with native gfx942 primitives, but this study
+does not justify claiming an optimization or root-speed advantage. The released
+artifact makes that conclusion reproducible and leaves the next research step
+well-defined: improve the RFS preconditioner schedule, damping, or estimator while
+preserving the certificate, then test across more scales and hardware.
 
 \section{Reproducibility statement}
 The repository records the source dataset revision and hashes, complete TOML/JSON
 configuration, container base, host audit, native sources, unit tests, every JSONL
-metric and telemetry sample, sweep decisions, three-seed summaries, figure-generation
-code, and the time-varying cost ledger. Long runs begin only after corpus verification,
-kernel parity, four-optimizer smoke tests, a full-model refresh test, and a finite
-\RFS{} certificate.
+metric and telemetry sample, sweep decisions, three-seed summaries, figure
+generation code, and the time-varying runtime ledger. Long runs begin only after
+corpus verification, kernel parity, four-optimizer smoke tests, a full-model
+refresh test, and a finite \RFS{} certificate.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

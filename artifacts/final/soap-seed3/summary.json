@@ -1,0 +1,14 @@
+{
+  "status": "complete",
+  "run_name": "soap-seed3",
+  "optimizer": "soap",
+  "seed": 3,
+  "steps": 1903,
+  "trained_tokens": 997720064,
+  "parameter_count": 124439808,
+  "test_loss": 3.472201347351074,
+  "test_perplexity": 32.20756450097911,
+  "wall_seconds": 3073.8759405612946,
+  "cost_usd": 2.1346362271242674,
+  "peak_vram_bytes": 41836489216
+}

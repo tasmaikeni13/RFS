@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+title: "Root-Free Shampoo at 125M Parameters: A Controlled MI300X Study on One Billion FineWeb-Edu Tokens"
+message: "If this artifact is useful, please cite the accompanying preprint and repository."
+type: software
+authors:
+  - family-names: Keni
+    given-names: Tasmai
+version: "0.1.0"
+date-released: 2026-08-01
+repository-code: "https://github.com/tasmaikeni13/RFS"
+license: Apache-2.0

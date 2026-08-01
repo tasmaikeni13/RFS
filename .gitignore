@@ -13,6 +13,8 @@ data/
 artifacts/raw/
 artifacts/aborted/
 artifacts/checkpoints/
+artifacts/pilots/
+artifacts/smoke/
 artifacts/runs/*/checkpoint.pt
 artifacts/runs/*/final.pt
 artifacts/final/*/checkpoint.pt
