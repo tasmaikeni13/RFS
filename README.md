@@ -84,4 +84,8 @@ Every run records wall time, peak VRAM, optimizer latency, power, temperature, G
 
 This is one model, one corpus, one context length, one accelerator, and three seeds. The sweep is deliberately constrained rather than exhaustive. Dense preconditioners are used only where the configured axis dimensions permit them, with diagonal Adam behavior for larger axes. The results establish what happened in this controlled MI300X experiment; they do not establish universal optimizer rankings.
 
-The complete preprint is [`paper/main.tex`](paper/main.tex), with references in [`paper/references.bib`](paper/references.bib). The old exploratory tree was removed from the working project; its contents remain recoverable from the Git history before the standalone MI300X commit.
+The complete preprint is [`paper/main.tex`](paper/main.tex), with references in [`paper/references.bib`](paper/references.bib).
+
+## License
+
+Released under Apache 2.0
